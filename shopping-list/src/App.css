@@ -287,21 +287,21 @@ body {
   cursor: pointer;
 }
 
-/* Botón completar */
 .complete-button {
   background-color: #4CAF50;
   color: white;
 }
 
-/* Botón editar */
 .edit-button {
-  background: linear-gradient(135deg, var(--warning-color), #f39c12);
+  background-color: #2196F3;
+  color: white;
 }
 
-/* Botón eliminar */
 .delete-button {
-  background: linear-gradient(135deg, var(--danger-color), #c0392b);
+  background-color: #f44336;
+  color: white;
 }
+
 
 /* Hover de los botones de acción */
 .action-button:hover {

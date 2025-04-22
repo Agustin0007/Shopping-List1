@@ -6,7 +6,16 @@ export default function ShoppingListItem({ item, onDelete, onEdit, onToggleCompl
   const [editValue, setEditValue] = useState(item.name)
   const [editQuantity, setEditQuantity] = useState(item.quantity)
 
-  // ... existing handleSave function ...
+  const handleSave = () => {
+    if (editValue.trim() === '' || editQuantity < 1) return
+    
+    onEdit(item.id, {
+      ...item,
+      name: editValue.trim(),
+      quantity: editQuantity
+    })
+    setIsEditing(false)
+  }
 
   return (
     <div className={`list-item ${item.completed ? 'completed' : ''}`}>
