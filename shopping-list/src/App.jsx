@@ -4,7 +4,7 @@ import { ShoppingList } from './components/ShoppingList'
 import { ShoppingHeader } from './components/ShoppingHeader'
 import './App.css'
 
-export function App() {
+export default function App() {
   // Estado principal para almacenar todos los items de la lista
   const [items, setItems] = useState(() => {
     const savedItems = localStorage.getItem('shoppingItems')
