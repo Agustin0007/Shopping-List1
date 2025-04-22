@@ -1,35 +1,62 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react' // Importamos los hooks necesarios
+import { ShoppingForm } from './components/ShoppingForm'
+import { ShoppingList } from './components/ShoppingList'
+import { ShoppingHeader } from './components/ShoppingHeader'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+export function App() {
+  // Estado principal para almacenar todos los items de la lista
+  const [items, setItems] = useState(() => {
+    const savedItems = localStorage.getItem('shoppingItems')
+    return savedItems ? JSON.parse(savedItems) : []
+  })
+  
+  // Efecto para guardar los items en localStorage cuando cambien
+  useEffect(() => {
+    localStorage.setItem('shoppingItems', JSON.stringify(items))
+  }, [items])
+
+  // Función para agregar un nuevo item a la lista
+  const addItem = (newItem) => {
+    setItems(prevItems => [...prevItems, { ...newItem, id: Date.now() }])
+    // Usa Date.now() como ID único temporal
+  }
+
+  // Función para eliminar un item de la lista por su ID
+  const deleteItem = (id) => {
+    setItems(items.filter(item => item.id !== id))
+    // Filtra y mantiene solo los items que no coinciden con el ID
+  }
+
+  // Función para editar un item existente
+  const editItem = (id, updatedItem) => {
+    setItems(items.map(item => 
+      item.id === id ? { ...item, ...updatedItem } : item
+    ))
+    // Actualiza el item específico manteniendo su ID
+  }
+
+  // Función para marcar un item como completado y reordenar la lista
+  const toggleComplete = (id) => {
+    const newItems = items.map(item =>
+      item.id === id ? { ...item, completed: !item.completed } : item
+    )
+    // Reordena: items no completados primero, completados al final
+    const uncompleted = newItems.filter(item => !item.completed)
+    const completed = newItems.filter(item => item.completed)
+    setItems([...uncompleted, ...completed])
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="shopping-app">
+      <ShoppingHeader /> {/* Renderiza el encabezado */}
+      <ShoppingForm onAddItem={addItem} /> {/* Formulario para agregar items */}
+      <ShoppingList 
+        items={items}
+        onDelete={deleteItem}
+        onEdit={editItem}
+        onToggleComplete={toggleComplete}
+      /> {/* Lista de items con todas las funciones necesarias */}
+    </div>
   )
 }
-
-export default App

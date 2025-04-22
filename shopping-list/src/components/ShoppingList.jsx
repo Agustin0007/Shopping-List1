@@ -1,4 +1,4 @@
-import { ShoppingListItem } from './ShoppingListItem' // Importamos el componente para cada item
+import ShoppingListItem from './ShoppingListItem.jsx' // Importamos el componente para cada item
 
 // Componente que renderiza la lista de items
 export function ShoppingList({ items, onDelete, onEdit, onToggleComplete }) {
