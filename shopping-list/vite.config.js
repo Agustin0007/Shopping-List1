@@ -5,7 +5,6 @@ export default defineConfig({
   plugins: [react()],
   base: '/Shopping-List1/',
   build: {
-    outDir: 'dist',
-    assetsDir: 'assets'
+    outDir: 'dist'
   }
 })
