@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { FaCheck, FaTimes, FaShoppingCart, FaPen, FaTrash } from 'react-icons/fa'
 
 export default function ShoppingListItem({ item, onDelete, onEdit, onToggleComplete }) {
   const [isEditing, setIsEditing] = useState(false)
@@ -33,21 +32,21 @@ export default function ShoppingListItem({ item, onDelete, onEdit, onToggleCompl
             min="1"
           />
           <button className="save-button" onClick={handleSave}>
-            <FaCheck />
+            ✓
             Save
           </button>
           <button className="cancel-button" onClick={() => setIsEditing(false)}>
-            <FaTimes />
+            ✕
             Cancel
           </button>
         </div>
       ) : (
         <>
           <div className="item-content">
-            <FaShoppingCart className="item-icon" />
+            🛒
             <span className="item-text">{item.name}</span>
             <span className="item-quantity">
-              <FaTimes />
+              ×
               {item.quantity}
             </span>
           </div>
@@ -56,19 +55,19 @@ export default function ShoppingListItem({ item, onDelete, onEdit, onToggleCompl
               className="action-button complete-button"
               onClick={() => onToggleComplete(item.id)}
             >
-              <FaCheck />
+              ✓
             </button>
             <button 
               className="action-button edit-button"
               onClick={() => setIsEditing(true)}
             >
-              <FaPen />
+              ✎
             </button>
             <button 
               className="action-button delete-button"
               onClick={() => onDelete(item.id)}
             >
-              <FaTrash />
+              🗑️
             </button>
           </div>
         </>
